@@ -1,9 +1,9 @@
 const enrolledStudentRepo = require("../database/repositories/enrolledStudentRepository");
 
-// Function to enroll a student
+
 const enrollStudent = async (studentID, courses) => {
     try {
-      // Validate input parameters
+     
       console.log(studentID, courses);
       if (!studentID || !courses || !Array.isArray(courses)) {
         return {
@@ -12,33 +12,33 @@ const enrollStudent = async (studentID, courses) => {
         };
       }
   
-      // Create enrolled student object
+     
       const enrolledStudentData = {
         studentID,
         courses,
       };
   
-      // Call repository function to enroll student
+     
       const enrolledStudent = await enrolledStudentRepo.enrollStudent(enrolledStudentData);
   
       return {
         status: 200,
         message: "Student enrolled successfully.",
-        data: enrolledStudent, // Return the newly enrolled student object
+        data: enrolledStudent, 
       };
     } catch (error) {
       console.error("Error enrolling student:", error.message);
       return {
         status: 500,
         message: "Failed to enroll student: Internal server error.",
-        error: error, // Return the error details
+        error: error, 
       };
     }
   };
-// Function to update an enrolled student by ID
+
 const updateEnrolledStudentById = async (id, studentID, updatedCourses) => {
     try {
-      // Check if id is provided
+      
       if (!id) {
         return {
           status: 400,
@@ -46,7 +46,7 @@ const updateEnrolledStudentById = async (id, studentID, updatedCourses) => {
         };
       }
   
-      // Check if studentID or updatedCourses is provided
+      
       if (!studentID && !updatedCourses) {
         return {
           status: 400,
@@ -82,7 +82,7 @@ const updateEnrolledStudentById = async (id, studentID, updatedCourses) => {
     }
   };
 
-// Function to get an enrolled student by ID
+
 const getEnrolledStudentById = async (id) => {
   try {
     const enrolledStudent = await enrolledStudentRepo.getEnrolledStudentById(id);
@@ -99,7 +99,7 @@ const getEnrolledStudentById = async (id) => {
 
 const getAllEnrollments = async () => {
     try {
-      // Call repository function to get all enrollments
+      
       const enrollments = await enrolledStudentRepo.getAllEnrollments();
       return enrollments;
     } catch (error) {
@@ -114,7 +114,7 @@ const getAllEnrollments = async () => {
 
   const deleteEnrolledStudentById = async (id) => {
     try {
-      // Call repository function to delete enrolled student
+     
       const deletedStudent = await enrolledStudentRepo.deleteEnrolledStudentById(id);
   
       if (!deletedStudent) {
@@ -138,11 +138,26 @@ const getAllEnrollments = async () => {
       };
     }
   };
+
+  const getEnrollmentsByCourseId = async (courseId) => {
+    try {
+      const enrollments = await enrolledStudentRepo.getEnrollmentsByCourseId(courseId);
+      return enrollments;
+    } catch (error) {
+      console.error("Error getting enrollments by courseId:", error.message);
+      throw {
+        status: 500,
+        message: "Failed to get enrollments by courseId: Internal server error.",
+        error: error,
+      };
+    }
+  };
   
   module.exports = {
     enrollStudent,
     updateEnrolledStudentById,
     getEnrolledStudentById,
     getAllEnrollments,
-    deleteEnrolledStudentById
+    deleteEnrolledStudentById,
+    getEnrollmentsByCourseId
   };

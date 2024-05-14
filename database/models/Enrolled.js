@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Define schema for enrolled student details
+
 const enrolledStudentSchema = new mongoose.Schema({
     studentID: {
         type: String,
@@ -18,10 +18,10 @@ const enrolledStudentSchema = new mongoose.Schema({
                 default: 0
             }
         }
-    ] // Embed course details within enrolled student document
+    ] 
 });
 
-// Create model for enrolled student
+
 const EnrolledStudent = mongoose.model('EnrolledStudent', enrolledStudentSchema);
 
 module.exports = EnrolledStudent;

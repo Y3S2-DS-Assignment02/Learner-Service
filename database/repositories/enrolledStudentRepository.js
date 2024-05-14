@@ -69,13 +69,24 @@ const getAllEnrollments = async () => {
       throw new Error("Error deleting enrolled student");
     }
   };
+
+  const getEnrollmentsByCourseId = async (courseId) => {
+    try {
+      const enrollments = await EnrolledStudent.find({ "courses.courseId": courseId });
+      return enrollments;
+    } catch (error) {
+      console.error("Error getting enrollments by courseId:", error.message);
+      throw new Error("Error getting enrollments by courseId");
+    }
+  };
   
   module.exports = {
     enrollStudent,
     updateEnrolledStudentById,
     getEnrolledStudentById,
     getAllEnrollments,
-    deleteEnrolledStudentById
+    deleteEnrolledStudentById,
+    getEnrollmentsByCourseId
   };
 
 
